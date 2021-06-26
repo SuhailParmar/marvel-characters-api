@@ -8,6 +8,10 @@ info:
 tags:
   - name: "Marvel Characters API"
 
+servers:
+  - url: http://localhost:8080
+    description: API for local development
+
 paths:
 
   /characters:
@@ -25,7 +29,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Character'
+                  type: string
 
   #/characters/{id}:
   #  get:
