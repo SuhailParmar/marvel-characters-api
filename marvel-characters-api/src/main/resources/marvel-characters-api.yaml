@@ -1,0 +1,42 @@
+openapi: 3.0.0
+
+info:
+  version: 0.0.1-alpha
+  title: Marvel Characters Service
+  description: The Marvel Characters service
+
+tags:
+  - name: "Marvel Characters API"
+
+paths:
+
+  /characters:
+    get:
+      summary: Retrieve a list of Marvel characters
+      description: Returns a list of Marvel characters stored from 'http://developer.marvel.com'
+      operationId: getAllCharacters
+      tags:
+        - "Marvel Characters API"
+      responses:
+        "200":
+          description: A list of character ids are returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Character'
+
+  #/characters/{id}:
+  #  get:
+  #    summary: Retrieve a specific Marvel character
+
+components:
+  schemas:
+    Character:
+      description: This represents a reduced version of the Marvel Character
+      type: object
+      properties:
+        id:
+          description: Marvel's unique identifier for the character
+          type: string
