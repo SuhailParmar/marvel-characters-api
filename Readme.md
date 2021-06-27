@@ -23,7 +23,7 @@ It's a spring boot app and can be run from within your IDE or as a JAR.
 3. Load the Environment variables into your shell
 ``source PRIVATE_KEY='' && source PUBLIC_KEY=""``
    
-4, Run the jar
+4. Run the jar
    ``java -jar C:\Users\user\.m2\repository\com\yapily\marvel-characters-service\0.0.1-SNAPSHOT\marvel-characters-service-0.0.1-SNAPSHOT.jar``
 
 ### Through IntelliJ
