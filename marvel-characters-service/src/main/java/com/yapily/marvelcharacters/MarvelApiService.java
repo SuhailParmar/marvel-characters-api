@@ -4,13 +4,13 @@ import com.yapily.marvelcharacters.model.MarvelApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +45,14 @@ public class MarvelApiService {
         baseUrl = uriComponents.toUri();
     }
 
-    public MarvelApiResponse getAllMarvelCharacters(RestTemplate restTemplate, String ts, int limit, int offset) {
+    public MarvelApiResponse getAllMarvelCharacters(RestTemplate restTemplate, int limit, int offset) {
+        AbstractMap.SimpleEntry<Long, String> timestampWithMd5 = MD5Utils.createTimestampsAndMd5Hash(privateKey, publicKey);
 
         URI uri = UriComponentsBuilder.fromUri(baseUrl)
                 .path("/characters")
                 .queryParam(API_KEY, publicKey)
-                .queryParam(TIMESTAMP, ts)
-                .queryParam(HASH, MD5Utils.digest(ts, privateKey, publicKey))
+                .queryParam(TIMESTAMP, timestampWithMd5.getKey())
+                .queryParam(HASH, timestampWithMd5.getValue())
                 .queryParam(LIMIT, limit)
                 .queryParam(OFFSET, offset)
                 .build()
@@ -63,8 +64,7 @@ public class MarvelApiService {
         return apiResponse;
     }
 
-    // TODO unique-ify TS
-    public List<Integer> getAllMarvelUserIds(RestTemplate restTemplate, String ts) {
+    public List<Integer> getAllMarvelUserIds(RestTemplate restTemplate) {
         List<Integer> marvelUserIds = new ArrayList<>();
 
         int offset = 0; // Counted Records So far
@@ -72,7 +72,7 @@ public class MarvelApiService {
 
         MarvelApiResponse response;
         while (totalCharactersToCount > 0) {
-            response = getAllMarvelCharacters(restTemplate, ts, 100, offset);
+            response = getAllMarvelCharacters(restTemplate, 100, offset);
             offset += 100;
             marvelUserIds.addAll(MarvelApiUtils.convertResponseIntoListOfCharacterIds(response));
             totalCharactersToCount = response.getData().getTotal() - offset;
@@ -82,12 +82,15 @@ public class MarvelApiService {
         return marvelUserIds;
     }
 
-    public MarvelApiResponse getMarvelCharacterById(RestTemplate restTemplate, Integer id, String ts) {
+    public MarvelApiResponse getMarvelCharacterById(RestTemplate restTemplate, Integer id) {
+
+        AbstractMap.SimpleEntry<Long, String> timestampWithMd5 = MD5Utils.createTimestampsAndMd5Hash(privateKey, publicKey);
+
         URI uri = UriComponentsBuilder.fromUri(baseUrl)
                 .path("/characters/" + id)
                 .queryParam(API_KEY, publicKey)
-                .queryParam(TIMESTAMP, ts)
-                .queryParam(HASH, MD5Utils.digest(ts, privateKey, publicKey))
+                .queryParam(TIMESTAMP, timestampWithMd5.getKey())
+                .queryParam(HASH, timestampWithMd5.getValue())
                 .build()
                 .toUri();
 

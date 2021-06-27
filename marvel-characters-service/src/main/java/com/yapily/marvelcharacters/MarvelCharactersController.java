@@ -30,7 +30,7 @@ public class MarvelCharactersController implements CharactersApi {
     @EventListener(ApplicationReadyEvent.class)
     public ResponseEntity<List<Integer>> getAllCharacters() {
         // Return all the IDs
-        List<Integer> marvelUserIds = marvelApiService.getAllMarvelUserIds(restTemplate, "helloworld");
+        List<Integer> marvelUserIds = marvelApiService.getAllMarvelUserIds(restTemplate);
         return new ResponseEntity<>(marvelUserIds, HttpStatus.OK);
     }
 
@@ -38,7 +38,7 @@ public class MarvelCharactersController implements CharactersApi {
     public ResponseEntity<Character> getOneCharacter(Integer id) {
         if(id <= 0)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        MarvelApiResponse response = marvelApiService.getMarvelCharacterById(restTemplate, id, "helloworld");
+        MarvelApiResponse response = marvelApiService.getMarvelCharacterById(restTemplate, id);
         return new ResponseEntity<>(MarvelApiUtils.decorator(response), HttpStatus.OK);
     }
 }
