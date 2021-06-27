@@ -6,7 +6,7 @@ info:
   description: The Marvel Characters service
 
 tags:
-  - name: "Marvel Characters API"
+  - name: "Characters API"
 
 servers:
   - url: http://localhost:8080
@@ -16,11 +16,12 @@ paths:
 
   /characters:
     get:
-      summary: Retrieve a list of Marvel characters
-      description: Returns a list of Marvel characters stored from 'http://developer.marvel.com'
+      summary: Retrieve an array of all Marvel characters IDs.
+      description: Returns a list of Marvel character IDS stored from 'http://developer.marvel.com'.
+                   The list is populated on startup and is cached in memory.
       operationId: getAllCharacters
       tags:
-        - "Marvel Characters API"
+        - "Characters API"
       responses:
         "200":
           description: A list of character ids are returned
@@ -34,8 +35,10 @@ paths:
   /characters/{id}:
     get:
       summary: Retrieve a specific Marvel character
-      description: Returns a specified Marvel character in realtime from 'http://developer.marvel.com'
+      description: Returns a specified Marvel character in realtime from 'http://developer.marvel.com'.
       operationId: getOneCharacter
+      tags:
+        - "Characters API"
       parameters:
         - in: path
           name: id
@@ -46,7 +49,7 @@ paths:
           description: The Marvel Character ID
       responses:
         "200":
-          description: A list of character ids are returned
+          description: Key information about the character is successfully returned
           content:
             application/json:
               schema:
@@ -55,7 +58,7 @@ paths:
 components:
   schemas:
     Character:
-      description: This represents a reduced version of the Marvel Character
+      description: This represents the key information regarding a Marvel Character
       type: object
       properties:
         id:

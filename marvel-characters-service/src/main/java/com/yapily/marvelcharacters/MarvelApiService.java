@@ -64,24 +64,6 @@ public class MarvelApiService {
         return apiResponse;
     }
 
-    public List<Integer> getAllMarvelUserIds(RestTemplate restTemplate) {
-        List<Integer> marvelUserIds = new ArrayList<>();
-
-        int offset = 0; // Counted Records So far
-        int totalCharactersToCount = 1; // initial value
-
-        MarvelApiResponse response;
-        while (totalCharactersToCount > 0) {
-            response = getAllMarvelCharacters(restTemplate, 100, offset);
-            offset += 100;
-            marvelUserIds.addAll(MarvelApiUtils.convertResponseIntoListOfCharacterIds(response));
-            totalCharactersToCount = response.getData().getTotal() - offset;
-        }
-
-        log.info("Retrieved {} character ids!", marvelUserIds.size());
-        return marvelUserIds;
-    }
-
     public MarvelApiResponse getMarvelCharacterById(RestTemplate restTemplate, Integer id) {
 
         AbstractMap.SimpleEntry<Long, String> timestampWithMd5 = MD5Utils.createTimestampsAndMd5Hash(privateKey, publicKey);
