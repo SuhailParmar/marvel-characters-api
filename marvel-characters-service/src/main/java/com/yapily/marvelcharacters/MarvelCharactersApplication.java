@@ -20,11 +20,6 @@ public class MarvelCharactersApplication {
         return new RestTemplate();
     }
 
-    @Bean
-    public MarvelApiService marvelApiService() {
-        return new MarvelApiService();
-    }
-
     public static void main(String[] args) {
         // Paginate through the list of marvel characters and store the IDs
         SpringApplication.run(MarvelCharactersApplication.class, args);
