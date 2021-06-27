@@ -1,6 +1,10 @@
 package com.yapily.marvelcharacters;
 
 import com.yapily.marvelcharacters.api.CharactersApi;
+import com.yapily.marvelcharacters.model.MarvelApiResponse;
+import com.yapily.marvelcharacters.models.Character;
+import com.yapily.marvelcharacters.models.CharacterThumbnail;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,9 +28,17 @@ public class MarvelCharactersController implements CharactersApi {
     @Override
     @Cacheable(value = "marvel")
     @EventListener(ApplicationReadyEvent.class)
-    public ResponseEntity<List<String>> getAllCharacters() {
+    public ResponseEntity<List<Integer>> getAllCharacters() {
         // Return all the IDs
-        List<String> marvelUserIds = marvelApiService.getAllMarvelUserIds(restTemplate, "helloworld");
+        List<Integer> marvelUserIds = marvelApiService.getAllMarvelUserIds(restTemplate, "helloworld");
         return new ResponseEntity<>(marvelUserIds, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Character> getOneCharacter(Integer id) {
+        if(id <= 0)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        MarvelApiResponse response = marvelApiService.getMarvelCharacterById(restTemplate, id, "helloworld");
+        return new ResponseEntity<>(MarvelApiUtils.decorator(response), HttpStatus.OK);
     }
 }

@@ -29,11 +29,28 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
+                  type: integer
 
-  #/characters/{id}:
-  #  get:
-  #    summary: Retrieve a specific Marvel character
+  /characters/{id}:
+    get:
+      summary: Retrieve a specific Marvel character
+      description: Returns a specified Marvel character in realtime from 'http://developer.marvel.com'
+      operationId: getOneCharacter
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The Marvel Character ID
+      responses:
+        "200":
+          description: A list of character ids are returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Character'
 
 components:
   schemas:
@@ -43,4 +60,20 @@ components:
       properties:
         id:
           description: Marvel's unique identifier for the character
+          type: integer
+        name:
+          description: The name of the character
           type: string
+        description:
+          description: A brief description of the character
+          type: string
+        thumbnail:
+          description: A reference to the image of the character
+          type: object
+          properties:
+            path:
+              description: The URI of the image
+              type: string
+            extension:
+              description: The file type extention of the image URI
+              type: string

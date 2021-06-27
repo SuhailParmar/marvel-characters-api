@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/*
- * Represents the response model of the MarvelAPI GET Characters
+/**
+ * Represents the response structure of a GET Marvel Character by ID and GET all Characters
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GetAllCharactersResponse {
+public class MarvelApiResponse {
 
     private Data data;
 
@@ -65,19 +65,68 @@ public class GetAllCharactersResponse {
     @NotNull
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CharacterRecord {
-        private String id;
+        private Integer id;
+        private String name;
+        private String description;
+        private CharacterThumbnail thumbnail;
 
-        public String getId() {
+        public Integer getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(Integer id) {
             this.id = id;
         }
 
         @Override
         public String toString() {
-            return id;
+            return String.valueOf(id);
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public CharacterThumbnail getThumbnail() {
+            return thumbnail;
+        }
+
+        public void setThumbnail(CharacterThumbnail thumbnail) {
+            this.thumbnail = thumbnail;
+        }
+
+        @NotNull
+        public static class CharacterThumbnail {
+            private String path;
+            private String extension;
+
+            public String getPath() {
+                return path;
+            }
+
+            public void setPath(String path) {
+                this.path = path;
+            }
+
+            public String getExtension() {
+                return extension;
+            }
+
+            public void setExtension(String extension) {
+                this.extension = extension;
+            }
         }
     }
 }
