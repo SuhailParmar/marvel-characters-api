@@ -17,14 +17,14 @@ The application expects two environment variables in order to contact with the M
 It's a spring boot app and can be run from within your IDE or as a JAR.
 
 1. Build the application ```mvn clean install```
-2. Ensure the JAR has been created `C:\Users\user\.m2\repository\com\yapily\marvel-characters-service\0.0.1-SNAPSHOT`
+2. Ensure the JAR has been created `C:\Users\user\.m2\repository\com\yapily\marvel-characters-service\0.0.1-alpha`
 
 ### Using a git bash shell
 3. Load the Environment variables into your shell
 ``source PRIVATE_KEY='' && source PUBLIC_KEY=""``
    
 4. Run the jar
-   ``java -jar C:\Users\user\.m2\repository\com\yapily\marvel-characters-service\0.0.1-SNAPSHOT\marvel-characters-service-0.0.1-SNAPSHOT.jar``
+   ``java -jar C:\Users\user\.m2\repository\com\yapily\marvel-characters-service\0.0.1-alpha\marvel-characters-service-0.0.1-alpha.jar``
 
 ### Through IntelliJ
 Create a Run Configuration pointing to the generated JAR and importing the environment variables.
@@ -33,7 +33,7 @@ Create a Run Configuration pointing to the generated JAR and importing the envir
 
 Override the spring configuration through the command line.
 
-``java -jar C:\Users\user\.m2\repository\com\yapily\marvel-characters-service\0.0.1-SNAPSHOT\marvel-characters-service-0.0.1-SNAPSHOT.jar --key.private="" 
+``java -jar C:\Users\user\.m2\repository\com\yapily\marvel-characters-service\0.0.1-alpha\marvel-characters-service-0.0.1-alpha.jar --key.private="" 
 --key.public=""
 ``
 

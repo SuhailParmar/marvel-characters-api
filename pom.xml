@@ -17,7 +17,7 @@
 
 	<groupId>com.yapily</groupId>
 	<artifactId>marvel-characters</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-alpha</version>
 	<name>marvel-characters</name>
 	<description>Demo project for retrieving Marvel Characters</description>
 
@@ -31,7 +31,7 @@
 			<dependency>
 				<groupId>com.yapily</groupId>
 				<artifactId>marvel-characters-api</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>0.0.1-alpha</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

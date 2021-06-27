@@ -5,7 +5,7 @@
     <parent>
         <artifactId>marvel-characters</artifactId>
         <groupId>com.yapily</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1-alpha</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -38,7 +38,7 @@
             <!-- The service must be able to reference the API -->
             <groupId>com.yapily</groupId>
             <artifactId>marvel-characters-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1-alpha</version>
         </dependency>
 
     </dependencies>
