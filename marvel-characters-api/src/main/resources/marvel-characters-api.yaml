@@ -10,7 +10,7 @@ tags:
 
 servers:
   - url: http://localhost:8080
-    description: API for local development
+    description: Local development server
 
 paths:
 

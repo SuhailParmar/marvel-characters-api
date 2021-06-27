@@ -37,7 +37,7 @@ public class MarvelCharactersController implements CharactersApi {
         MarvelApiResponse response = marvelApiService.getAllMarvelCharacters(limit, 0);
 
         float totalNumberOfCharacters = response.getData().getTotal(); // Kept as float for floating point division.
-        float numberOfIterationsAsFloat = (totalNumberOfCharacters / limit) - 1; // remove the re-iterating the first set
+        float numberOfIterationsAsFloat = (totalNumberOfCharacters / limit) - 1; // Don't re-iterate the first set
         final int numberOfIterations = (int) Math.ceil(numberOfIterationsAsFloat);
 
         final List<Integer> marvelCharacterIds = new ArrayList<>(
@@ -46,8 +46,8 @@ public class MarvelCharactersController implements CharactersApi {
         IntStream.range(1, numberOfIterations + 1)
                 .parallel()
                 .mapToObj(iteration -> {
-                    int offset = iteration * 100; // Calculate offset to prevent retrieving the same ids
-                    MarvelApiResponse r = marvelApiService.getAllMarvelCharacters(100, offset);
+                    int offset = iteration * limit; // Calculate offset to prevent retrieving the same ids
+                    MarvelApiResponse r = marvelApiService.getAllMarvelCharacters(limit, offset);
                     return MarvelApiUtils.convertResponseIntoListOfCharacterIds(r);
                 }).flatMap(Collection::stream) // flatten the stream of lists into a single list of ints
                 .forEachOrdered(marvelCharacterIds::add);
@@ -58,7 +58,8 @@ public class MarvelCharactersController implements CharactersApi {
 
     @Override
     public ResponseEntity<Character> getOneCharacter(Integer id) {
-        if (id < 0) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        // id of 0 provides a 409 conflict in the MarvelAPI
+        if (id <= 0) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
             MarvelApiResponse response = marvelApiService.getMarvelCharacterById(id);
             return new ResponseEntity<>(MarvelApiUtils.decorator(response), HttpStatus.OK);
