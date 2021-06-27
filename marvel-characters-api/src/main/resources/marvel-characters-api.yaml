@@ -54,6 +54,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Character'
+        "400":
+          description: Id provided is not a positive integer
+        "404":
+          description: Marvel user does not exist.
 
 components:
   schemas:

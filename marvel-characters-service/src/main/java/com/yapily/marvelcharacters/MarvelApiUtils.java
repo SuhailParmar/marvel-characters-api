@@ -32,7 +32,7 @@ public class MarvelApiUtils {
         MarvelApiResponse.CharacterRecord record = response.getData().getResults().get(0);
         Character character = new Character();
         character.setDescription(record.getDescription());
-        character.setId((int) record.getId());
+        character.setId(record.getId());
         character.setName(record.getName());
         CharacterThumbnail thumbnail = new CharacterThumbnail();
         thumbnail.setExtension(record.getThumbnail().getExtension());

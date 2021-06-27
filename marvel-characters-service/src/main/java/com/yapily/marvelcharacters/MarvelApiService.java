@@ -3,6 +3,7 @@ package com.yapily.marvelcharacters;
 import com.yapily.marvelcharacters.model.MarvelApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -11,11 +12,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class MarvelApiService {
+
+    @Autowired
+    public RestTemplate restTemplate;
 
     private static final Logger log = LoggerFactory.getLogger(MarvelApiService.class);
 
@@ -45,7 +47,7 @@ public class MarvelApiService {
         baseUrl = uriComponents.toUri();
     }
 
-    public MarvelApiResponse getAllMarvelCharacters(RestTemplate restTemplate, int limit, int offset) {
+    public MarvelApiResponse getAllMarvelCharacters(int limit, int offset) {
         AbstractMap.SimpleEntry<Long, String> timestampWithMd5 = MD5Utils.createTimestampsAndMd5Hash(privateKey, publicKey);
 
         URI uri = UriComponentsBuilder.fromUri(baseUrl)
@@ -64,7 +66,7 @@ public class MarvelApiService {
         return apiResponse;
     }
 
-    public MarvelApiResponse getMarvelCharacterById(RestTemplate restTemplate, Integer id) {
+    public MarvelApiResponse getMarvelCharacterById(Integer id) {
 
         AbstractMap.SimpleEntry<Long, String> timestampWithMd5 = MD5Utils.createTimestampsAndMd5Hash(privateKey, publicKey);
 

@@ -1,8 +1,5 @@
 package com.yapily.marvelcharacters;
 
-import org.slf4j.Logger;
-
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,8 +9,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableCaching
 @SpringBootApplication
 public class MarvelCharactersApplication {
-
-    private static final Logger LOG = LoggerFactory.getLogger(MarvelCharactersApplication.class);
 
     @Bean
     public RestTemplate restTemplate() {
